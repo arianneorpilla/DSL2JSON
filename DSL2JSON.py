@@ -94,7 +94,7 @@ def import_entries(data, dictionaryName, outFile):
 
                 print(f"[{i}] {bcolors.OKCYAN}[DSL2JSON]{bcolors.ENDC} Processed dictionary entry from{bcolors.OKCYAN}{dictionaryName}{bcolors.ENDC}: {term}")
 
-            entry = Entry(term, "", "", definition, "", "", "")
+            entry = Entry(term.replace("\t", ""), "", "", definition, "", "", "")
             entry.print_entry(outFile)
 
             term = ""
