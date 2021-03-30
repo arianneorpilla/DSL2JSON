@@ -2,6 +2,8 @@ import sys
 import os
 import re
 import zipfile
+import subprocess
+import sys
 
 '''
 DSL2JSON - A script for converting DSL format dictionaries compatible
@@ -42,7 +44,7 @@ class Entry:
         openBracket = "{"
         closeBracket = "}"
 
-        with open(outFile, 'a+', encoding="utf8") as o:
+        with open(outFile, 'a+', encoding=encoding) as o:
             o.write(f"{openBracket}{q}term{q}: {q}{self.term}{q}, {q}altterm{q}: "
                 f"{q}{self.altterm}{q}, {q}pronunciation{q}: {q}{self.pronunciation}{q}, "
                 f"{q}definition{q}: {q}{self.definition}{q}, {q}pos{q}: {q}{q}, {q}examples{q}: "
@@ -87,7 +89,7 @@ def import_entries(data, dictionaryName, outFile):
                 i = i + 1
 
                 if i != 0:
-                    with open(outFile, 'a+', encoding="utf8") as o:
+                    with open(outFile, 'a+', encoding=encoding) as o:
                         o.write(f",")
 
                 print(f"[{i}] {bcolors.OKCYAN}[DSL2JSON]{bcolors.ENDC} Processed dictionary entry from{bcolors.OKCYAN}{dictionaryName}{bcolors.ENDC}: {term}")
@@ -101,11 +103,21 @@ def import_entries(data, dictionaryName, outFile):
     return i
 
 def get_lines(inFile):
-    with open(inFile, 'r', encoding="utf8") as i:
+    with open(inFile, 'r', encoding=encoding) as i:
         data = i.readlines()
         dictionaryName = data[0].replace("#NAME", "").replace("\t", "").replace("\"", "")
 
         return data, dictionaryName
+
+def install_and_import(package):
+    import importlib
+    try:
+        importlib.import_module(package)
+    except ImportError:
+        import pip
+        pip.main(['install', package])
+    finally:
+        globals()[package] = importlib.import_module(package)
 
 print(f'''
 {bcolors.OKGREEN}DSL2JSON{bcolors.ENDC} - A script for converting DSL format dictionaries compatible
@@ -121,6 +133,14 @@ This software is free to use with no warranties.''')
 
 inFile = sys.argv[1]
 outFile = "DSL2JSON.json"
+
+install_and_import("chardet")
+chardet = globals()["chardet"]
+
+rawdata = open(inFile, 'rb').read()
+result = chardet.detect(rawdata)
+encoding = result['encoding']
+
 data, dictionaryName = get_lines(inFile)
 
 del data[0]
@@ -143,16 +163,15 @@ allLines = allLines.replace("\"", "\\\"")
 
 allLines = re.sub('<[^<]+?>', '', allLines)
 
-with open(outFile, 'a', encoding="utf8") as o:
+with open(outFile, 'a', encoding=encoding) as o:
     o.truncate(0)
     o.write(f"[")
 
 total_entries = import_entries(allLines, dictionaryName, outFile)
 
-with open(outFile, 'a', encoding="utf8") as o:
+with open(outFile, 'a', encoding=encoding) as o:
     o.write(f"]")
 
 zipfile.ZipFile('DSL2JSON.zip', mode='w').write("DSL2JSON.json")
 
 print(f"\n{bcolors.OKGREEN}[DONE] {bcolors.OKCYAN}[DSL2JSON]{bcolors.ENDC} Processed {total_entries} dictionary entries from{bcolors.OKCYAN}{dictionaryName}{bcolors.ENDC}: Dictionary can be imported with DSL2JSON.zip")
-
