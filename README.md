@@ -18,9 +18,9 @@ In a working directory, <b><a href="https://github.com/lrorpilla/DSL2JSON/blob/m
 ```
 python3 DSL2JSON.py filename_of_dictionary_to_convert.dsl
 ```
-* **Use of the script requires the **`chardet`** library to determine the encoding of the input file. The script will automatically download this file from PIP. If the script does not work the first time, try running it again as the installation requires another startup of the script.**
-* The script will output a `DSL2JSON.zip` file that can be imported with the **Install Dictionary From File** option in the Migaku Dictionary Settings menu. For more information, <b><a href="https://www.migaku.io/tools-guides/migaku-dictionary/manual/#installing-dictionaries">see the official guide on the Migaku add-on</a></b>.
-* A `DSL2JSON.json` file is also left behind for debugging purposes should any escape character errors with the JSON occur.
+* **Use of the script requires the **`chardet`** library to determine the encoding of the input file. The script will automatically download this file from PIP to facilitate ease of use. If the script does not work the first time, try running it again as the installation requires another startup of the script.**
+* The script will output a **`DSL2JSON.zip`** file that can be imported with the **Install Dictionary From File** option in the Migaku Dictionary Settings menu. For more information, <b><a href="https://www.migaku.io/tools-guides/migaku-dictionary/manual/#installing-dictionaries">see the official guide on the Migaku add-on</a></b>.
+* A **`DSL2JSON.json`** file is also left behind for debugging purposes should any escape character errors with the JSON occur.
 
 ## 🚀 Possible Extensions
 - Improve script to recognize **altterm, pronunciation, parts of speech and example fields**.
