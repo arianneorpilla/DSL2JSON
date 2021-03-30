@@ -139,6 +139,7 @@ allLines = allLines.replace("<m1>", "  ")
 allLines = allLines.replace("<m2>", "    ")
 allLines = allLines.replace("<m3>", "      ")
 allLines = allLines.replace("\\", "/")
+allLines = allLines.replace("\"", "\\\"")
 
 allLines = re.sub('<[^<]+?>', '', allLines)
 
