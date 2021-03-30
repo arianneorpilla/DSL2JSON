@@ -129,7 +129,9 @@ by {bcolors.OKGREEN}Leo Rafael Orpilla{bcolors.ENDC}
 {bcolors.OKGREEN}github.com/lrorpilla
 leorafaelorpilla@gmail.com{bcolors.ENDC}
 
-This software is free to use with no warranties.''')
+This software is free to use with no warranties.
+
+The script may take some time before it starts. Please be patient.''')
 
 inFile = sys.argv[1]
 outFile = "DSL2JSON.json"
