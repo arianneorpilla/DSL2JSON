@@ -42,7 +42,7 @@ class Entry:
         openBracket = "{"
         closeBracket = "}"
 
-        with open(outFile, 'a+') as o:
+        with open(outFile, 'a+', encoding="utf8") as o:
             o.write(f"{openBracket}{q}term{q}: {q}{self.term}{q}, {q}altterm{q}: "
                 f"{q}{self.altterm}{q}, {q}pronunciation{q}: {q}{self.pronunciation}{q}, "
                 f"{q}definition{q}: {q}{self.definition}{q}, {q}pos{q}: {q}{q}, {q}examples{q}: "
@@ -87,7 +87,7 @@ def import_entries(data, dictionaryName, outFile):
                 i = i + 1
 
                 if i != 0:
-                    with open(outFile, 'a+') as o:
+                    with open(outFile, 'a+', encoding="utf8") as o:
                         o.write(f",")
 
                 print(f"[{i}] {bcolors.OKCYAN}[DSL2JSON]{bcolors.ENDC} Processed dictionary entry from{bcolors.OKCYAN}{dictionaryName}{bcolors.ENDC}: {term}")
@@ -101,7 +101,7 @@ def import_entries(data, dictionaryName, outFile):
     return i
 
 def get_lines(inFile):
-    with open(inFile, 'r') as i:
+    with open(inFile, 'r', encoding="utf8") as i:
         data = i.readlines()
         dictionaryName = data[0].replace("#NAME", "").replace("\t", "").replace("\"", "")
 
@@ -142,13 +142,13 @@ allLines = allLines.replace("\\", "/")
 
 allLines = re.sub('<[^<]+?>', '', allLines)
 
-with open(outFile, 'a') as o:
+with open(outFile, 'a', encoding="utf8") as o:
     o.truncate(0)
     o.write(f"[")
 
 total_entries = import_entries(allLines, dictionaryName, outFile)
 
-with open(outFile, 'a') as o:
+with open(outFile, 'a', encoding="utf8") as o:
     o.write(f"]")
 
 zipfile.ZipFile('DSL2JSON.zip', mode='w').write("DSL2JSON.json")
