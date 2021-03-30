@@ -14,7 +14,7 @@ Useful for converting multilingual dictionaries. Written for the language learni
 - Dictionary term and definition imports properly.
 
 ## 📖 Usage
-* In a working directory, <b><a href="https://github.com/lrorpilla/DSL2JSON/blob/main/DSL2JSON.py">download the script</a></b> and execute it with the command below in the same folder with the DSL file to convert as follows with <b><a href="https://www.python.org/">Python</b></a..
+* In a working directory, <b><a href="https://github.com/lrorpilla/DSL2JSON/blob/main/DSL2JSON.py">download the script</a></b> and execute it with the command below in the same folder with the DSL file to convert as follows with <b><a href="https://www.python.org/">Python</b></a>
 ```
 python3 DSL2JSON.py filename_of_dictionary_to_convert.dsl
 ```
