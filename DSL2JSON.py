@@ -39,17 +39,16 @@ class Entry:
         self.examples = examples
         self.audio = audio
 
-    def print_entry(self, outFile):
+    def append_entry(self, outFile, lineToAppend):
         q = "\""
         openBracket = "{"
         closeBracket = "}"
 
-        with open(outFile, 'a+', encoding=encoding) as o:
-            o.write(f"{openBracket}{q}term{q}: {q}{self.term}{q}, {q}altterm{q}: "
-                f"{q}{self.altterm}{q}, {q}pronunciation{q}: {q}{self.pronunciation}{q}, "
-                f"{q}definition{q}: {q}{self.definition}{q}, {q}pos{q}: {q}{q}, {q}examples{q}: "
-                f"{q}{self.examples}{q}, {q}audio{q}: {q}{self.audio}{q}{closeBracket}")
-            
+    
+        return lineToAppend + (f"{openBracket}{q}term{q}: {q}{self.term}{q}, {q}altterm{q}: "
+            f"{q}{self.altterm}{q}, {q}pronunciation{q}: {q}{self.pronunciation}{q}, "
+            f"{q}definition{q}: {q}{self.definition}{q}, {q}pos{q}: {q}{q}, {q}examples{q}: "
+            f"{q}{self.examples}{q}, {q}audio{q}: {q}{self.audio}{q}{closeBracket}")
 
 def import_entries(data, dictionaryName, outFile):
     unimported = data.split("\n")
@@ -69,6 +68,7 @@ def import_entries(data, dictionaryName, outFile):
     i = 0
     term = ""
     definition = ""
+    all_entries = ""
 
     while unimported:
         if term == "":
@@ -95,12 +95,12 @@ def import_entries(data, dictionaryName, outFile):
                 print(f"[{i}] {bcolors.OKCYAN}[DSL2JSON]{bcolors.ENDC} Processed dictionary entry from{bcolors.OKCYAN}{dictionaryName}{bcolors.ENDC}: {term}")
 
             entry = Entry(term.replace("\t", ""), "", "", definition, "", "", "")
-            entry.print_entry(outFile)
+            all_entries = entry.append_entry(outFile, all_entries)
 
             term = ""
             definition = ""
 
-    return i
+    return all_entries, i
 
 def get_lines(inFile):
     with open(inFile, 'r', encoding=encoding) as i:
@@ -169,11 +169,14 @@ with open(outFile, 'a', encoding=encoding) as o:
     o.truncate(0)
     o.write(f"[")
 
-total_entries = import_entries(allLines, dictionaryName, outFile)
+all_entries, count = import_entries(allLines, dictionaryName, outFile)
+
+with open(outFile, 'a', encoding=encoding) as o:
+    o.write(all_entries)
 
 with open(outFile, 'a', encoding=encoding) as o:
     o.write(f"]")
 
 zipfile.ZipFile('DSL2JSON.zip', mode='w').write("DSL2JSON.json")
 
-print(f"\n{bcolors.OKGREEN}[DONE] {bcolors.OKCYAN}[DSL2JSON]{bcolors.ENDC} Processed {total_entries} dictionary entries from{bcolors.OKCYAN}{dictionaryName}{bcolors.ENDC}: Dictionary can be imported with DSL2JSON.zip")
+print(f"\n{bcolors.OKGREEN}[DONE] {bcolors.OKCYAN}[DSL2JSON]{bcolors.ENDC} Processed {count} dictionary entries from{bcolors.OKCYAN}{dictionaryName}{bcolors.ENDC}: Dictionary can be imported with DSL2JSON.zip")
