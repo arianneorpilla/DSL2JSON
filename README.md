@@ -1,8 +1,8 @@
 # DSL2JSON
 
 <p align="left">
-  <img src="https://i.postimg.cc/YCVj78ny/image.png" alt="picture" height=250>
-  <img src="https://i.postimg.cc/SNbxgJXH/image.png" alt="picture" height=250>
+  <img src="https://i.postimg.cc/YCVj78ny/image.png" alt="picture" height=200>
+  <img src="https://i.postimg.cc/SNbxgJXH/image.png" alt="picture" height=200>
 </p>
 
 **A script for converting DSL format dictionaries compatible with GoldenDict to the Migaku Dictionary format**.
