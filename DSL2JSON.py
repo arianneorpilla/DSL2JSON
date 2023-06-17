@@ -54,10 +54,6 @@ class Entry:
 def import_entries(data, dictionaryName, outFile):
     unimported = data.split("\n")
 
-    del unimported[0]
-    del unimported[1]
-    del unimported[2]
-
     unimported.insert(0, "DSL2JSON")
     unimported.insert(1, "\tnoun")
     unimported.insert(2, "\tThis dictionary was imported with DSL2JSON. This is a dummy value for the DSL2JSON converter, ignore this term.")
@@ -145,9 +141,9 @@ encoding = result['encoding']
 
 data, dictionaryName = get_lines(inFile)
 
-del data[0]
-del data[1]
 del data[2]
+del data[1]
+del data[0]
 
 allLines = ""
 allLines = allLines.join(data)
